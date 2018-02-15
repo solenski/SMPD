@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SMPD.FeatureSelection;
 using System.Diagnostics;
 using System.Globalization;
-using Accord.Extensions;
 using Accord.Math;
-using Accord.Statistics.Kernels;
-using MoreLinq;
 using SMPD.Classifiers;
 using SMPD.Tests;
 

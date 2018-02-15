@@ -21,8 +21,11 @@ namespace SMPD.Tests
 
             for (var i = 0; i < times; i++)
             {
-                this._samples.Shuffle();
-                testCollection.Add(this._samples.First());
+                for (var j = 0; j < 100; j++)
+                {
+                    this._samples.Shuffle();
+                    testCollection.Add(this._samples.First());
+                }
             }
             var accs = new List<double>();
 
@@ -39,6 +42,6 @@ namespace SMPD.Tests
             accs.Add(testCollection.Select(x => x.label.StartsWith("Acer") ? 0 : 1).Where((t, i) => t == results[i]).Count() / (double)testCollection.Count);
             return accs.Average() * 100;
         }
-}
+    }
 
 }
