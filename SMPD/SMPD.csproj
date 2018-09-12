@@ -94,10 +94,10 @@
     <Compile Include="Klasyfikatory\KlasyfikatorKNN.cs" />
     <Compile Include="Klasyfikatory\KlasyfikatorNajblizszegoSasiada.cs" />
     <Compile Include="Extensions\LINQ.cs" />
-    <Compile Include="FeatureSelection\SelektorCech.cs" />
-    <Compile Include="FeatureSelection\WynikSelektoraCech.cs" />
-    <Compile Include="FeatureSelection\FisherSelektorCech.cs" />
-    <Compile Include="FeatureSelection\SelektorSFS.cs" />
+    <Compile Include="SelektoryCech\SelektorCech.cs" />
+    <Compile Include="SelektoryCech\WynikSelektoraCech.cs" />
+    <Compile Include="SelektoryCech\FisherSelektorCech.cs" />
+    <Compile Include="SelektoryCech\SelektorSFS.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
