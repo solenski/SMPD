@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace SMPD.Extensions
 {
-    public static class Extensions
+    public static class Rozszerzenia
     {
-        public static IEnumerable<IEnumerable<T>> Split<T>(this IEnumerable<T> list, int parts)
+        public static IEnumerable<IEnumerable<T>> PodzielNaGrupyPoN<T>(this IEnumerable<T> lista, int n)
         {
-            int i = 0;
-            var splits = from item in list
-                group item by i++ % parts into part
-                select part.AsEnumerable();
-            return splits;
+            var i = 0;
+            return lista.GroupBy(item => i++ % n).Select(part => part.AsEnumerable());
+
         }
     }
 

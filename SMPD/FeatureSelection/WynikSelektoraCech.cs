@@ -1,8 +1,8 @@
 ﻿namespace SMPD.FeatureSelection
 {
-    public struct FeatureSelectorResult
+    public struct WynikSelektoraCech
     {
         public int[] Features { get; set; }
-        public double CriterionValue { get; set; }
+        public double WynikSelektora { get; set; }
     }
 }

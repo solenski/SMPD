@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMPD", "SMPD\SMPD.csproj", "{36E41E5E-A62D-40B8-A5E0-B2FF67B3C798}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMPD.Tests", "SMPD.Tests\SMPD.Tests.csproj", "{1B930AC9-3D57-434E-B5AA-5C41D6C38611}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{36E41E5E-A62D-40B8-A5E0-B2FF67B3C798}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36E41E5E-A62D-40B8-A5E0-B2FF67B3C798}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36E41E5E-A62D-40B8-A5E0-B2FF67B3C798}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B930AC9-3D57-434E-B5AA-5C41D6C38611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B930AC9-3D57-434E-B5AA-5C41D6C38611}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B930AC9-3D57-434E-B5AA-5C41D6C38611}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B930AC9-3D57-434E-B5AA-5C41D6C38611}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

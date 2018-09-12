@@ -5,34 +5,32 @@ using System.Text;
 using System.Threading.Tasks;
 using Accord.Math;
 using MoreLinq;
-using SMPD.Classifiers;
+using SMPD.Klasyfikatory;
 using SMPD.Extensions;
 
 namespace SMPD.Tests
 {
-    public abstract class ClassifierTestter<T> where T : ClassifierBase, new()
+    public abstract class TesterKlasyfikatorów
     {
-        protected List<MapleSample> _samples;
+        protected List<MapleSample> _probki;
         protected int _k;
 
-        public ClassifierTestter(List<MapleSample> samples, int k)
+        protected TesterKlasyfikatorów(List<MapleSample> probki, int k)
         {
-            _samples = samples.Where(x => x.label.StartsWith("Acer") || x.label.StartsWith("Quercus")).ToList();
+            _probki = probki.Where(x => x.label.StartsWith("Acer") || x.label.StartsWith("Quercus")).ToList();
             _k = k;
         }
-
-        public abstract double Test(int nParts);
     }
 
-    public class Crossvalidation<T> : ClassifierTestter<T> where T : ClassifierBase, new()
+    public class Kroswalidacja<T> : TesterKlasyfikatorów where T : Klasyfikator, new()
     {
-        public Crossvalidation(List<MapleSample> samples, int k) : base(samples, k)
+        public Kroswalidacja(List<MapleSample> probki, int k) : base(probki, k)
         {
         }
 
-        public override double Test(int nParts)
+        public virtual double Test(int nParts)
         {
-            var splitted = this._samples.Split(nParts).ToList();
+            var splitted = this._probki.PodzielNaGrupyPoN(nParts).ToList();
             var accs = new List<double>();
             foreach (var part in splitted)
             {
@@ -49,8 +47,8 @@ namespace SMPD.Tests
                     .SelectMany(x => x.label, (sample, c) => sample.label.StartsWith("Acer") ? 0 : 1)
                     .ToArray();
 
-                uut.Train(_k, 2, inputs, outputs, Distance.Euclidean);
-                var results = partList.SelectMany(x => x.samples).Select(x => uut.Execute(x)).ToArray();
+                uut.Trenuj(_k, 2, inputs, outputs, Distance.Euclidean);
+                var results = partList.SelectMany(x => x.samples).Select(x => uut.Klasyfikuj(x)).ToArray();
                 accs.Add(partList.Select(x => x.label.StartsWith("Acer") ? 0 : 1).Where((t, i) => t == results[i]).Count() / (double)partList.Count);
             }
             return accs.Average() * 100;

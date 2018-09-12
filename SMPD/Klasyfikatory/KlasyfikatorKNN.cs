@@ -1,27 +1,28 @@
 ﻿using System;
 using Accord.Math;
 
-namespace SMPD.Classifiers
+namespace SMPD.Klasyfikatory
 {
-    public class KnnClassifier : ClassifierBase
+    public class KlasyfikatorKNN : Klasyfikator
     {
-        public KnnClassifier()
-        {
-            
-        }
-        private double[] distances;
+ 
+        private double[] odleglosci;
 
         private int k;
 
 
-        public KnnClassifier(int k, double[][] inputs, int[] outputs, Func<double[], double[], double> distance) : base(
+        public KlasyfikatorKNN(int k, double[][] inputs, int[] outputs, Func<double[], double[], double> distance) : base(
             k, inputs, outputs, distance)
         {
         }
 
 
-        public KnnClassifier(int k, int classes, double[][] inputs, int[] outputs,
+        public KlasyfikatorKNN(int k, int classes, double[][] inputs, int[] outputs,
             Func<double[], double[], double> distance) : base(k, classes, inputs, outputs, distance)
+        {
+        }
+
+        public KlasyfikatorKNN()
         {
         }
 
@@ -37,20 +38,7 @@ namespace SMPD.Classifiers
         public Func<double[], double[], double> Distance { get; set; }
 
 
-        public int K
-        {
-            get => k;
-            set
-            {
-                if (value <= 0 || value > Inputs.Length)
-                    throw new ArgumentOutOfRangeException(nameof(value),
-                        "The value for k should be greater than zero and less than total number of input points.");
-
-                k = value;
-            }
-        }
-
-        public override void Train(int k, int classes, double[][] inputs, int[] outputs,
+        public override void Trenuj(int k, int classes, double[][] inputs, int[] outputs,
             Func<double[], double[], double> distance)
         {
             Inputs = inputs;
@@ -60,16 +48,16 @@ namespace SMPD.Classifiers
             ClassCount = classes;
 
             Distance = distance;
-            distances = new double[inputs.Length];
+            odleglosci = new double[inputs.Length];
         }
 
 
-        public override int Execute(double[] input)
+        public override int Klasyfikuj(double[] input)
         {
             for (var i = 0; i < Inputs.Length; i++)
-                distances[i] = Distance(input, Inputs[i]);
+                odleglosci[i] = Distance(input, Inputs[i]);
 
-            var idx = distances.Bottom(k, true);
+            var idx = odleglosci.Bottom(k, true);
 
             var scores = new double[ClassCount];
 
@@ -78,7 +66,7 @@ namespace SMPD.Classifiers
                 var j = idx[i];
 
                 var label = Outputs[j];
-                var d = distances[i];
+                var d = odleglosci[i];
 
                 scores[label] += 1.0 / (1.0 + d);
             }

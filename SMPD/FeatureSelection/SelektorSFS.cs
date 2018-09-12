@@ -7,27 +7,27 @@ using Accord.Math;
 
 namespace SMPD.FeatureSelection
 {
-    public class SequentialForwardSelector : FeatureSelector
+    public class SelektorSFS : SelektorCech
     {
-        private Func<IEnumerable<IEnumerable<double>>, IEnumerable<IEnumerable<double>>, FeatureSelectorResult> _criterionFunction;
+        private Func<IEnumerable<IEnumerable<double>>, IEnumerable<IEnumerable<double>>, WynikSelektoraCech> _criterionFunction;
 
-        public SequentialForwardSelector(int featureCount, IProgress<(int, int)> progress, Func<IEnumerable<IEnumerable<double>>, IEnumerable<IEnumerable<double>>, FeatureSelectorResult> criterionFunction) : base(featureCount, progress)
+        public SelektorSFS(int liczbaCech, Func<IEnumerable<IEnumerable<double>>, IEnumerable<IEnumerable<double>>, WynikSelektoraCech> criterionFunction) : base(liczbaCech)
         {
             _criterionFunction = criterionFunction;
         }
 
-        public override FeatureSelectorResult SelectFeatures(IEnumerable<IEnumerable<double>> samplesA, IEnumerable<IEnumerable<double>> samplesB)
+        public virtual WynikSelektoraCech SelectFeatures(IEnumerable<IEnumerable<double>> samplesA, IEnumerable<IEnumerable<double>> samplesB)
         {
             var samplesAList = samplesA.ToList();
             var samplesBList = samplesB.ToList();
 
 
-            var best = new FeatureSelectorResult { CriterionValue = 0, Features = new int[] { } };
+            var best = new WynikSelektoraCech { WynikSelektora = 0, Features = new int[] { } };
 
 
-            while (best.Features.Length < this.FeatureCount)
+            while (best.Features.Length < this.LiczbaCech)
             {
-                var bestSoFar = new FeatureSelectorResult { CriterionValue = 0, Features = new int[] { } };
+                var bestSoFar = new WynikSelektoraCech { WynikSelektora = 0, Features = new int[] { } };
 
                 for (var i = 0; i < samplesAList.First().Count(); i++)
                 {
@@ -40,11 +40,11 @@ namespace SMPD.FeatureSelection
 
                     var result = this._criterionFunction(selectedFeaturesA, selectedFeaturesB);
 
-                    if (bestSoFar.CriterionValue < result.CriterionValue)
+                    if (bestSoFar.WynikSelektora < result.WynikSelektora)
                     {
-                        bestSoFar = new FeatureSelectorResult
+                        bestSoFar = new WynikSelektoraCech
                         {
-                            CriterionValue = result.CriterionValue,
+                            WynikSelektora = result.WynikSelektora,
                             Features = new HashSet<int>(best.Features.Concat(new[] { i })).ToArray()
                         };
                     }
@@ -52,7 +52,6 @@ namespace SMPD.FeatureSelection
                 }
 
                 best = bestSoFar;
-                this.Progress.Report((best.Features.Length, this.FeatureCount));
 
             }
 
