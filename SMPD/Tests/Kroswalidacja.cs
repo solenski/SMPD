@@ -12,10 +12,10 @@ namespace SMPD.Tests
 {
     public abstract class TesterKlasyfikatorów
     {
-        protected List<MapleSample> _probki;
+        protected List<MapleProbki> _probki;
         protected int _k;
 
-        protected TesterKlasyfikatorów(List<MapleSample> probki, int k)
+        protected TesterKlasyfikatorów(List<MapleProbki> probki, int k)
         {
             _probki = probki.Where(x => x.label.StartsWith("Acer") || x.label.StartsWith("Quercus")).ToList();
             _k = k;
@@ -24,7 +24,7 @@ namespace SMPD.Tests
 
     public class Kroswalidacja<T> : TesterKlasyfikatorów where T : Klasyfikator, new()
     {
-        public Kroswalidacja(List<MapleSample> probki, int k) : base(probki, k)
+        public Kroswalidacja(List<MapleProbki> probki, int k) : base(probki, k)
         {
         }
 

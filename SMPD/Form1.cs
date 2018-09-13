@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SMPD.FeatureSelection;
-using System.Diagnostics;
 using System.Globalization;
 using Accord.Math;
 using SMPD.Klasyfikatory;
@@ -14,7 +13,7 @@ namespace SMPD
 {
     public partial class Form1 : Form
     {
-        private List<MapleSample> _wybraneCechy = new MapleOakExampleFileReader().ReadSamples().ToList();
+        private List<MapleProbki> _wybraneCechy = new MapleOakExampleFileReader().ReadSamples().ToList();
         private List<double[]> _acer;
         private List<double[]> _quercus;
         private int _featureCount = 1;
@@ -43,7 +42,7 @@ namespace SMPD
 
         private void ZapamietajWybraneCechy(WynikSelektoraCech result)
         {
-            this._wybraneCechy = _wybraneCechy.Select(sample => new MapleSample
+            this._wybraneCechy = _wybraneCechy.Select(sample => new MapleProbki
             {
                 label = sample.label,
                 samples = sample.samples.Where((t, i) => result.Features.Contains(i)).ToArray().ToList().ToArray()

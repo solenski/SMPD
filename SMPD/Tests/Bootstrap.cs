@@ -11,13 +11,13 @@ namespace SMPD.Tests
 {
     class Bootstrap<T> : TesterKlasyfikatorów where T : Klasyfikator, new()
     {
-        public Bootstrap(List<MapleSample> probki, int k) : base(probki, k)
+        public Bootstrap(List<MapleProbki> probki, int k) : base(probki, k)
         {
         }
 
         public virtual double Test(int times)
         {
-            var testCollection = new List<MapleSample>();
+            var testCollection = new List<MapleProbki>();
 
             for (var i = 0; i < times; i++)
             {
