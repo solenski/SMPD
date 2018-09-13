@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SMPD
 {
-    public struct MapleSample
+    public struct MapleProbki
     {
         public double[][] samples { get; set; }
         public string label { get; set; }
@@ -18,14 +18,14 @@ namespace SMPD
     {
         private const string path = "MapleOak.txt";
 
-        public IEnumerable<MapleSample> ReadSamples()
+        public IEnumerable<MapleProbki> ReadSamples()
         {
             return File.ReadAllLines(path).Select(x => x.Split(',')).Select(x1 => new
             {
                 label = x1[0],
                 samples = x1.Skip(1).Select(y => Convert.ToDouble(y, CultureInfo.InvariantCulture)).ToArray()
             }).GroupBy(x => x.label).Select(x =>
-                new MapleSample { label = x.Key, samples = x.Select(y => y.samples.ToArray()).ToArray() });
+                new MapleProbki { label = x.Key, samples = x.Select(y => y.samples.ToArray()).ToArray() });
         }
     }
 }

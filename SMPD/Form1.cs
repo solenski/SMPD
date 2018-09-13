@@ -76,7 +76,7 @@ namespace SMPD
         private int _nnEndIndexQ;
 
 
-        private void button3_Click(object sender, EventArgs e)
+        private void najblizszegoSasiadaTrenuj(object sender, EventArgs e)
         {
             var percent = double.Parse(this.maskedTextBox2.Text) / 100;
             _nnEndIndexA = Convert.ToInt32(this._acer.Count * percent);
@@ -91,7 +91,7 @@ namespace SMPD
             this.nnClassifier = new KlasyfikatorNajblizszegoSasiada(2, inputs, outputs, Distance.Euclidean);
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void najblizszegoSasiadaKlasyfikuj(object sender, EventArgs e)
         {
             var inputs = this._acer.GetRange(_nnEndIndexA, this._acer.Count - _nnEndIndexA).Concat(this._quercus.GetRange(_nnEndIndexQ, this._quercus.Count - _nnEndIndexQ)).ToArray();
             var outputs = this._acer.GetRange(_nnEndIndexA, this._acer.Count - _nnEndIndexA).Select(_ => 0)
@@ -110,7 +110,7 @@ namespace SMPD
         private KlasyfikatorNajblizszejSredniej nmClassifier;
 
 
-        private void button6_Click(object sender, EventArgs e)
+        private void nNajblizszychSasiadowTrenuj(object sender, EventArgs e)
         {
             var percent = double.Parse(this.maskedTextBox3.Text) / 100;
             _nnEndIndexAk = Convert.ToInt32(this._acer.Count * percent);
@@ -125,7 +125,7 @@ namespace SMPD
             this.knnClassifier = new KlasyfikatorKNN(k, 2, inputs, outputs, Distance.Euclidean);
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void nNajblizszySasiadowKlasyfikuj(object sender, EventArgs e)
         {
             var inputs = this._acer.GetRange(_nnEndIndexAk, this._acer.Count - _nnEndIndexAk).Concat(this._quercus.GetRange(_nnEndIndexQk, this._quercus.Count - _nnEndIndexQk)).ToArray();
             var outputs = this._acer.GetRange(_nnEndIndexAk, this._acer.Count - _nnEndIndexAk).Select(_ => 0)
@@ -136,7 +136,7 @@ namespace SMPD
             textBox8.Text = accuracy * 100 + "%";
         }
 
-        private void nMeanTrain_Click(object sender, EventArgs e)
+        private void nSrednichTrenuj(object sender, EventArgs e)
         {
             var percent = double.Parse(this.nMSamplePercent.Text) / 100;
             _nnEndIndexAnM = Convert.ToInt32(this._acer.Count * percent);
@@ -151,7 +151,7 @@ namespace SMPD
 
         }
 
-        private void nMeanExecute_Click(object sender, EventArgs e)
+        private void nNablizszychSasiadowKlasyfikuj_Click(object sender, EventArgs e)
         {
             var inputs = this._acer.GetRange(_nnEndIndexAnM, this._acer.Count - _nnEndIndexAnM).Concat(this._quercus.GetRange(_nnEndIndexQnM, this._quercus.Count - _nnEndIndexQnM)).ToArray();
             var outputs = this._acer.GetRange(_nnEndIndexAnM, this._acer.Count - _nnEndIndexAnM).Select(_ => 0)
@@ -162,40 +162,45 @@ namespace SMPD
             nMeanResult.Text = accuracy * 100 + "%";
         }
 
-        private void crossvalidatebutton_Click(object sender, EventArgs e)
+        private void KroswalidacjaNajblizszySasiad(object sender, EventArgs e)
         {
-            var selected = this.crossvalidatecombo.SelectedItem as string;
-            switch (selected)
-            {
-                case "kNN":
-                    this.crossvalidateresult.Text = new Kroswalidacja<KlasyfikatorKNN>(this._wybraneCechy, int.Parse(this.textBox9.Text)).Test(int.Parse(this.crossvalidationparts.Text)).ToString(CultureInfo.InvariantCulture) + '%';
-                    break;
-                case "NN":
-                    this.crossvalidateresult.Text = new Kroswalidacja<KlasyfikatorNajblizszegoSasiada>(this._wybraneCechy, 1).Test(int.Parse(this.crossvalidationparts.Text)).ToString(CultureInfo.InvariantCulture) + '%';
-                    break;
-                case "NM":
-                    this.crossvalidateresult.Text = new Kroswalidacja<KlasyfikatorNajblizszejSredniej>(this._wybraneCechy, 1).Test(int.Parse(this.crossvalidationparts.Text)).ToString(CultureInfo.InvariantCulture) + '%';
-                    break;
-            }
+            this.kroswalidacjaNablizszegoSasiadaWynik.Text = new Kroswalidacja<KlasyfikatorNajblizszegoSasiada>(this._wybraneCechy, 1).Test(int.Parse(this.kroswalidacjaNajblizszegoSasiadaN.Text)).ToString(CultureInfo.InvariantCulture) + '%';
+
+
         }
 
-        private void bootsrapttest_Click(object sender, EventArgs e)
+        private void KroswalidacjakNajblizszychSasiadow(object sender, EventArgs e)
         {
-            var selected = this.bootstrapcombo.SelectedItem as string;
-            if (selected == "kNN")
-                this.bootstrapresult.Text =
-                    new Bootstrap<KlasyfikatorKNN>(this._wybraneCechy, int.Parse(this.textBox9.Text))
-                        .Test(int.Parse(this.bootsrapcount.Text)).ToString(CultureInfo.InvariantCulture) + '%';
-            else if (selected == "NN")
-                this.bootstrapresult.Text = new Bootstrap<KlasyfikatorNajblizszegoSasiada>(this._wybraneCechy, 1)
-                                                .Test(int.Parse(this.bootsrapcount.Text))
-                                                .ToString(CultureInfo.InvariantCulture) + '%';
-            else if (selected == "NM")
-                this.bootstrapresult.Text = new Bootstrap<KlasyfikatorNajblizszejSredniej>(this._wybraneCechy, 1)
-                                                .Test(int.Parse(this.bootsrapcount.Text))
-                                                .ToString(CultureInfo.InvariantCulture) + '%';
+            this.kroswalidacjakNajblizszychSasiadowWynik.Text = new Kroswalidacja<KlasyfikatorKNN>(this._wybraneCechy, int.Parse(this.kroswalidacjaNablizszychSasiadowK.Text)).Test(int.Parse(this.klasyfikatorKNajblizszychSasiadowN.Text)).ToString(CultureInfo.InvariantCulture) + '%';
+
+        }
+
+        private void KrosWalidacjaNajbliższejSredniej(object sender, EventArgs e)
+        {
+            this.kroswalidacjaNajblizszejSredniekWynik.Text = new Kroswalidacja<KlasyfikatorNajblizszejSredniej>(this._wybraneCechy, 1).Test(int.Parse(this.kroswalidacjaNajblizszejSredniejN.Text)).ToString(CultureInfo.InvariantCulture) + '%';
+
         }
 
 
+        private void bootstrapNajblizszegoSasiadaTest_Click(object sender, EventArgs e)
+        {
+            this.bootstrapNajblizszegoSasiadaWynik.Text = new Bootstrap<KlasyfikatorNajblizszegoSasiada>(this._wybraneCechy, 1)
+                                                              .Test(int.Parse(this.bootstrapnajblizszychSasiadowIle.Text))
+                                                              .ToString(CultureInfo.InvariantCulture) + '%';
+        }
+
+        private void bootstrapKNajblizszySasiadowTest_Click(object sender, EventArgs e)
+        {
+            this.bootstrapNajblizszychSasiadowWynik.Text =
+                new Bootstrap<KlasyfikatorKNN>(this._wybraneCechy, int.Parse(this.boostrapkNajblizszychSasiadowK.Text))
+                    .Test(int.Parse(this.bootstrapnajblizszychSasiadowIle.Text)).ToString(CultureInfo.InvariantCulture) + '%';
+        }
+
+        private void boostrapNajblizszejSredniejTest_Click(object sender, EventArgs e)
+        {
+            this.bootstrapNabjlizszejSredniejWynik.Text = new Bootstrap<KlasyfikatorNajblizszejSredniej>(this._wybraneCechy, 1)
+                                                              .Test(int.Parse(this.bootstrapNajblizszejSredniejIle.Text))
+                                                              .ToString(CultureInfo.InvariantCulture) + '%';
+        }
     }
 }
