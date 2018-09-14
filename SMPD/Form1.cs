@@ -192,7 +192,7 @@ namespace SMPD
         {
             this.bootstrapNajblizszychSasiadowWynik.Text =
                 new Bootstrap<KlasyfikatorKNN>(this._wybraneCechy, int.Parse(this.boostrapkNajblizszychSasiadowK.Text))
-                    .Test(int.Parse(this.bootstrapnajblizszychSasiadowIle.Text)).ToString(CultureInfo.InvariantCulture) + '%';
+                    .Test(int.Parse(this.bootstrapkNajblizszychSasiadowIle.Text)).ToString(CultureInfo.InvariantCulture) + '%';
         }
 
         private void boostrapNajblizszejSredniejTest_Click(object sender, EventArgs e)
